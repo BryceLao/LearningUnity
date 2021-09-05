@@ -16258,7 +16258,7 @@ GameObject:
   - component: {fileID: 585949007}
   - component: {fileID: 585949009}
   - component: {fileID: 585949008}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Foreground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18544,6 +18544,7 @@ GameObject:
   - component: {fileID: 1490725077}
   - component: {fileID: 1490725080}
   - component: {fileID: 1490725081}
+  - component: {fileID: 1490725082}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -18563,10 +18564,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 50
+  m_Mass: 20
   m_LinearDrag: 2
   m_AngularDrag: 0.05
-  m_GravityScale: 2
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -18675,4 +18676,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 723a3096223044142b19b7346bd591a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 1490725077}
+  anim: {fileID: 1490725082}
+  ground:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!95 &1490725082
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1490725076}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b1a02faba646cb9458a83811983dbc6c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
