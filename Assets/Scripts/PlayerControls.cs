@@ -12,7 +12,6 @@ public class PlayerControls : MonoBehaviour {
     private enum State {idle,running, jumping, falling}     
     private State state= State.idle;
     private Collider2D coll;
-    public int cherries=0;
     [SerializeField] private LayerMask ground;
     [SerializeField] private float speed=5f;
     [SerializeField] private float jump=10f;
@@ -22,49 +21,55 @@ public class PlayerControls : MonoBehaviour {
         coll=GetComponent<Collider2D>();;
     }
     private void Update() {    
+        
         Movement();
         VelocityState();
         anim.SetInteger("state", (int)state);
+
     }
 
-    private void VelocityState() {
-        if(state == State.jumping) {
-            if(rb.velocity.y < 0.1f) {
+    private void VelocityState(){
+
+        if(state== State.jumping){
+            if(rb.velocity.y < 0.1f){
                 state=State.falling;
             }
         }
-        else if(state == State.falling) {
-            if(coll.IsTouchingLayers(ground)) {
+
+        else if(state==State.falling){
+            if(coll.IsTouchingLayers(ground)){
                 state=State.idle;
             }
         }
-        else if(Math.Abs(rb.velocity.x) > 2f) {
+
+        else if(Math.Abs(rb.velocity.x) > 2f){
             state=State.running;   
         }
-        else {
+
+        else{
             state=State.idle;
         }
+
     }
 
-    private void Movement() {
+    private void Movement(){
+
         float HDirection=Input.GetAxis("Horizontal");
+
         if(HDirection < 0 ) {
             rb.velocity= new Vector2(-speed, rb.velocity.y);
             transform.localScale = new Vector2(-1,1);
         }
+
         else if(HDirection > 0) {
             rb.velocity= new Vector2(speed, rb.velocity.y);
             transform.localScale =  new Vector2(1,1);
         }
+
         if(Input.GetButtonDown("Jump") &&  coll.IsTouchingLayers(ground)) {
             rb.velocity= new Vector2(rb.velocity.x, jump);   
             state=State.jumping;
         }
-    }
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if(collision.tag=="Collectable") {
-            Destroy(collision.gameObject);
-            cherries+=1;
-        }
+
     }
 }
