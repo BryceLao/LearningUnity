@@ -63,7 +63,7 @@ public class PlayerControls : MonoBehaviour {
         }
     }
     private void OnTriggerEnter2D(Collider2D collision) {
-        if(collision.tag=="Collectable") {
+        if(collision.tag=="Collectable") {     
             Destroy(collision.gameObject);
             cherries+=1;
             cherrycounter.text=cherries.ToString();
