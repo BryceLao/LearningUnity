@@ -67,6 +67,6 @@ public class PlayerControls : MonoBehaviour {
             Destroy(collision.gameObject);
             cherries+=1;
             cherrycounter.text=cherries.ToString();
-        }
+        }      
     }
 }
