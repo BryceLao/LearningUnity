@@ -13,11 +13,15 @@ public class PlayerControls : MonoBehaviour {
     private State state=State.idle;
     private Collider2D coll;
     [SerializeField] private LayerMask ground;
-    [SerializeField] private float speed=5f;
-    [SerializeField] private float jump=10f;
-    [SerializeField] private int cherries=0;
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private float jump = 10f;
+    [SerializeField] private int tempcherries = 0;
+    [SerializeField] private string cherries = "";
     [SerializeField] private Text cherrycounter;
-    [SerializeField] private float damageForce=10f;
+    [SerializeField] private string frogs = "";
+    [SerializeField] private Text frogcounter;
+    [SerializeField] private int tempfrogs = 0;
+    [SerializeField] private float damageForce = 10f;
     private void Start(){
         rb=GetComponent<Rigidbody2D>();
         anim=GetComponent<Animator>();
@@ -72,14 +76,19 @@ public class PlayerControls : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.tag == "Collectable") {     
             Destroy(collision.gameObject);
-            cherries += 1;
+            tempcherries += 1;
+            cherries = tempcherries+"/15";
             cherrycounter.text=cherries.ToString();
         }                      
     }
     private void OnCollisionEnter2D(Collision2D other){
         if (other.gameObject.tag == "Enemy") {
+            Frog frog = other.gameObject.GetComponent<Frog>();
             if(state==State.falling){
-                Destroy(other.gameObject);
+                frog.JumpedOn();
+                tempfrogs += 1;
+                frogs = tempfrogs+"/4";
+                frogcounter.text=frogs.ToString();
                 Jump();
             }
             else {
