@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Frog : MonoBehaviour {
+public class Frog : Enemy {
     [SerializeField] private float leftCap;
     [SerializeField] private float rightCap;
     [SerializeField] private float jumpLength = 10f;
@@ -13,18 +13,33 @@ public class Frog : MonoBehaviour {
 
     private bool facingLeft = true;
 
-    private void Start() {
+    protected override void Start() {
+        base.Start();
         coll = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
     }
     private void Update() {
+        if (anim.GetBool("Jumping")) {
+            if(rb.velocity.y < 0.1f){
+                anim.SetBool("Falling", true);
+                anim.SetBool("Jumping",false);
+            }
+        }
+        if (coll.IsTouchingLayers(ground) && anim.GetBool("Falling")) {
+            anim.SetBool("Falling", false);
+        }  
+    }
+
+    private void Move() {
         if (facingLeft) {
             if (transform.position.x > leftCap) {
-                if(coll.IsTouchingLayers(ground)){
-                    rb.velocity = new Vector2(-jumpLength, jumpHeight);   
+                if (coll.IsTouchingLayers(ground)) {
+                    rb.velocity = new Vector2(-jumpLength, jumpHeight);
+                    anim.SetBool("Jumping", true);
                 }
+
                 if (transform.localScale.x != 1) {
-                    transform.localScale = new Vector3(1,1);
+                    transform.localScale = new Vector3(1, 1);
                 }
             }
             else {
@@ -33,11 +48,13 @@ public class Frog : MonoBehaviour {
         }
         else {
             if (transform.position.x < rightCap) {
-                if(coll.IsTouchingLayers(ground)) {
-                    rb.velocity = new Vector2(jumpLength, jumpHeight);   
+                if (coll.IsTouchingLayers(ground)) {
+                    rb.velocity = new Vector2(jumpLength, jumpHeight);
+                    anim.SetBool("Jumping", true);
                 }
+
                 if (transform.localScale.x != -1) {
-                    transform.localScale = new Vector3(-1,1);
+                    transform.localScale = new Vector3(-1, 1);
                 }
             }
             else {
